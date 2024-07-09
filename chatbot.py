@@ -95,6 +95,27 @@ for review in book_reviews:
         "review": review,
         "sentiment": sentiment
     })
+
+
     
-print("\n" + book_summary + "\n")
+
+book_reviews_with_positive_sentiments = []
+
+for sentiment in book_reviews_with_sentiments:
+    #identify each review with postive sentiments and append to array book_reviews_with_positive_sentiments 
+    # use the summary and sentiment analysis to generate email content for book release announcement email
+    email_prompt = f"""Generate an email using the {book_summary} and only use book reviews from {book_reviews_with_sentiments} where sentiment = "positive". This email is for a book release announcement email. This should be an exciting email that makes people want to run out and buy the book.
+    
+    Also provide 2 versions of a subject line for the email."""
+
+    review_summary_and_book_reviews = [
+            {"role": "system", "content": "You are a helpful email marketing assistant"},
+            {"role": "user", "content": email_prompt}
+        ]
+    email_content = get_response_from_openai_chatbot(model, review_summary_and_book_reviews)
+       
+      
+    
+print("\n\n" + book_summary + "\n\n")
 print(book_reviews_with_sentiments)
+print("\n\n" + email_content + "\n\n")
